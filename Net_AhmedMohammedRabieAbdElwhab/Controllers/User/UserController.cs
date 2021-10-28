@@ -262,10 +262,10 @@ namespace Net_AhmedMohammedRabieAbdElwhab.Controllers.User
         {
             try
             {
-
+                
                 /*
                  	ports
-                    25, 587	(for unencrypted/TLS connections)
+                    25, 587	(for unencrypted/TLS connections) test
                     465	(for SSL connections)
                  
                  
