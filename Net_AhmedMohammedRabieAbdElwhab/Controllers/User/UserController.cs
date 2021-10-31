@@ -149,11 +149,19 @@ namespace Net_AhmedMohammedRabieAbdElwhab.Controllers.User
         }
         [Route("JoinDamenForm")]
         [HttpPost]
-        public  IHttpActionResult JoinDamenForm(JoinDamenFormViewModel model)
+        public  IHttpActionResult JoinDamenForm ()
         {
             try
             {
-
+                JoinDamenFormViewModel model = new JoinDamenFormViewModel();
+                model.Area=HttpContext.Current.Request.Params["Area"];
+                model.Governorate = HttpContext.Current.Request.Params["Governorate"];
+                model.describe = HttpContext.Current.Request.Params["describe"];
+                model.Email = HttpContext.Current.Request.Params["Email"];
+                model.firstName = HttpContext.Current.Request.Params["firstName"];
+                model.lastName = HttpContext.Current.Request.Params["lastName"];
+                model.phone = HttpContext.Current.Request.Params["phone"];
+         
                 /*
                  	ports
                     25, 587	(for unencrypted/TLS connections)
@@ -165,30 +173,33 @@ namespace Net_AhmedMohammedRabieAbdElwhab.Controllers.User
                 {
                     return BadRequest("model Cann't Be null");
                 }
-                //var httpRequest = HttpContext.Current.Request;
-                //var docfiles = new List<string>();
-                //if (httpRequest.Files.Count > 0)
-                //{
+                var httpRequest = HttpContext.Current.Request;
+                var docfiles = new List<string>();
+                if (httpRequest.Files.Count > 0)
+                {
 
-                //    foreach (string file in httpRequest.Files)
-                //    {
-                //        Guid generatedId = new Guid();
-                //        var postedFile = httpRequest.Files[file];
-                //        var filePath = HttpContext.Current.Server.MapPath("~/UploadedImages/" + generatedId + postedFile.FileName);
-                //        postedFile.SaveAs(filePath);
-                //        filePath = "UploadedImages/" + generatedId + postedFile.FileName;
-                //        docfiles.Add(filePath);
+                    foreach (string file in httpRequest.Files)
+                    {
+                        Guid generatedId = new Guid();
+                        var postedFile = httpRequest.Files[file];
+                        var filePath = HttpContext.Current.Server.MapPath("~/UploadedImages/" + generatedId + postedFile.FileName);
+                        postedFile.SaveAs(filePath);
+                        filePath = "UploadedImages/" + generatedId + postedFile.FileName;
+                        docfiles.Add(filePath);
 
-                //    }
-                //}
+                    }
+                }
 
                 string Email = "amrabie6767@gmail.com";
                 MailMessage ms = new MailMessage(Email, Email);
                 ms.Subject = "Join Damen";
-                ms.Body = "Hey Sir I am " + model.firstName + " " + model.lastName + " " + " My PhoneNumber : " + model.phone
-                    + " |My Mail Address  : " + model.Email
-                     + "| my Full Address is " + model.Area + " " + model.Governorate + "And this is about  my self " +
-                     model.describe;
+                ms.Body = "<span> Hey Sir I am " + model.firstName + " " + model.lastName + "  </span>" + " <br /><span> My PhoneNumber : " + model.phone +"</span><br />"
+                    + " <span> | My Mail Address  : "  + model.Email + "</span ><br />"
+                     + " <span>| my Full Address is " + model.Area    + " "+
+                     
+                     model.Governorate + " | And this is about  my self " +
+                     "</br> <span>" +
+                     model.describe + "</span>";
 
               
                 //foreach (var docfil in docfiles)
@@ -197,6 +208,7 @@ namespace Net_AhmedMohammedRabieAbdElwhab.Controllers.User
 
                 //}
                 SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net", 587);
+                ms.IsBodyHtml = true;
                 smtpClient.Credentials = new System.Net.NetworkCredential()
                 {
                     UserName = "apikey",
@@ -258,11 +270,23 @@ namespace Net_AhmedMohammedRabieAbdElwhab.Controllers.User
 
         [Route("ApplyToJobForm")]
         [HttpPost]
-        public IHttpActionResult ApplyToJobForm(ApplyForJobForm model)
+        public IHttpActionResult ApplyToJobForm()
         {
             try
             {
-                
+                ApplyForJobForm model = new ApplyForJobForm();
+                model.Address = HttpContext.Current.Request.Params["Address"];
+                model.ContactNumber = HttpContext.Current.Request.Params["ContactNumber"];
+                model.EmailAddress = HttpContext.Current.Request.Params["EmailAddress"];
+                model.ExperienceYearsNumber = HttpContext.Current.Request.Params["ExperienceYearsNumber"];
+                model.FullName = HttpContext.Current.Request.Params["FullName"];
+                model.Gender = HttpContext.Current.Request.Params["Gender"];
+                model.MaritalStatus = HttpContext.Current.Request.Params["MaritalStatus"];
+                model.Title = HttpContext.Current.Request.Params["Title"];
+                model.MilitaryStatus = HttpContext.Current.Request.Params["MilitaryStatus"];
+                model.Experience = HttpContext.Current.Request.Params["Experience"];
+                model.Education = HttpContext.Current.Request.Params["Education"];
+                model.EducationalDegree = HttpContext.Current.Request.Params["EducationalDegree"];
                 /*
                  	ports
                     25, 587	(for unencrypted/TLS connections) test
@@ -275,7 +299,22 @@ namespace Net_AhmedMohammedRabieAbdElwhab.Controllers.User
                     return BadRequest("model Cann't Be null");
                 }
 
+                var httpRequest = HttpContext.Current.Request;
+                var docfiles = new List<string>();
+                if (httpRequest.Files.Count > 0)
+                {
 
+                    foreach (string file in httpRequest.Files)
+                    {
+                        Guid generatedId = new Guid();
+                        var postedFile = httpRequest.Files[file];
+                        var filePath = HttpContext.Current.Server.MapPath("~/UploadedImages/" + generatedId + postedFile.FileName);
+                        postedFile.SaveAs(filePath);
+                        filePath = "UploadedImages/" + generatedId + postedFile.FileName;
+                        docfiles.Add(filePath);
+
+                    }
+                }
                 string Email = "amrabie6767@gmail.com";
                 MailMessage ms = new MailMessage(Email,Email);
                 ms.Subject = "Apply To Job";
@@ -283,7 +322,11 @@ namespace Net_AhmedMohammedRabieAbdElwhab.Controllers.User
                     + " | My Mail Address  : " + model.EmailAddress
                      + "| years Of experience : " + model.ExperienceYearsNumber + " |milatry Status is : " + model.MaritalStatus 
                      +  "| gender : " + model.Gender ;
+                //foreach (var docfil in docfiles)
+                //{
+                //    ms.Attachments.Add(new System.Net.Mail.Attachment("http://localhost:54816/UploadedImages/" + docfil)); ;
 
+                //}
                 SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net", 587);
                 smtpClient.Credentials = new System.Net.NetworkCredential()
                 {

@@ -16,5 +16,11 @@ namespace Net_AhmedMohammedRabieAbdElwhab.BL.ViewModels
         public string ContactNumber { get; set; }
         public string ExperienceYearsNumber { get; set; }
         public string MaritalStatus { get; set; }
+        public string MilitaryStatus { get; set; }
+        public string Experience { get; set; }
+        public string Education { get; set; }
+        public string EducationalDegree { get; set; }
+
+
     }
 }
